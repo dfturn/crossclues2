@@ -3,22 +3,61 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 60px;
-  padding: 0.5rem;
+  height: 100%;
+  padding: 0.0625rem;
   border: 1px solid #dee2e6;
   background-color: #f8f9fa;
-  font-size: 0.875rem;
+  font-size: clamp(0.35rem, 1.8vw, 0.9rem);
   font-weight: 500;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 4px;
 }
 
 .clue-label-text {
   font-weight: 700;
   color: #212529;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  line-height: 1.05;
+  max-width: 100%;
 }
 
 .clue-label-clue {
   font-weight: 400;
   color: #6c757d;
-  font-size: 0.8rem;
+  font-size: 0.75em;
+  line-height: 1;
+}
+
+/* Tablet and up */
+@media (min-width: 480px) {
+  .clue-label {
+    padding: 0.1rem;
+    font-size: clamp(0.4rem, 1.6vw, 0.95rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .clue-label {
+    padding: 0.15rem;
+    font-size: clamp(0.5rem, 1.4vw, 1rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .clue-label {
+    padding: 0.2rem;
+    font-size: clamp(0.6rem, 1.2vw, 1rem);
+  }
+}
+
+/* Landscape mode on small screens */
+@media (orientation: landscape) and (max-height: 500px) {
+  .clue-label {
+    padding: 0.05rem;
+    font-size: clamp(0.3rem, 1.2vw, 0.6rem);
+  }
 }

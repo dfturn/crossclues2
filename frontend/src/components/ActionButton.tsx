@@ -17,9 +17,14 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
       <Button
         type="button"
         variant="primary"
-        size="lg"
-        className="fw-bold"
+        className="fw-bold action-card-btn"
         onClick={onClick}
+        style={{
+          fontSize: "clamp(1.25rem, 5vw, 1.75rem)",
+          padding: "clamp(0.75rem, 3vw, 1.25rem) clamp(1.5rem, 6vw, 2.5rem)",
+          minWidth: "clamp(80px, 20vw, 120px)",
+          minHeight: "clamp(50px, 12vw, 70px)",
+        }}
       >
         {label}
       </Button>
@@ -28,16 +33,15 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
           type="button"
           onClick={onDiscard}
           variant="danger"
-          className="position-absolute p-0 d-flex align-items-center justify-content-center"
+          className="position-absolute p-0 d-flex align-items-center justify-content-center action-discard-btn"
           style={{
-            width: "24px",
-            height: "24px",
+            width: "clamp(32px, 8vw, 40px)",
+            height: "clamp(32px, 8vw, 40px)",
             borderRadius: "50%",
-            top: "-8px",
-            right: "-8px",
-            fontSize: "16px",
+            top: "-12px",
+            right: "-12px",
+            fontSize: "clamp(20px, 5vw, 28px)",
             fontWeight: "bold",
-            padding: "0 !important",
           }}
         >
           ×

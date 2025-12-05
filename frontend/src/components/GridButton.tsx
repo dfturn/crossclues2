@@ -20,7 +20,7 @@ export const GridButton: React.FC<GridButtonProps> = ({
           ? "bg-danger border-danger text-white"
           : "bg-light border-secondary text-secondary"
       }`}
-      style={{ minHeight: "60px" }}
+      style={{ fontSize: "clamp(0.5rem, 2.5vw, 1rem)" }}
     >
       {discarded ? "✗" : guessed ? label : null}
     </div>

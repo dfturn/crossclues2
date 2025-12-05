@@ -7,6 +7,7 @@ import { ActionButton } from "../components/ActionButton";
 import { useGameState } from "../hooks/useGameState";
 import { postGuess, startGame, leaveRoom } from "../api/gameApi";
 import type { Card } from "../api/gameApi";
+import "./GameScreen.css";
 
 // Helper to create card label from row/column indices (e.g., "A3" for row 0, column 2)
 const getCardLabel = (card: Card): string => {
@@ -117,53 +118,60 @@ export const GameScreen: React.FC = () => {
 
   return (
     <div className="min-vh-100 d-flex flex-column bg-light">
-      <Navbar bg="dark" variant="dark" sticky="top" className="shadow-sm">
-        <Container>
-          <Navbar.Brand href="#" className="fw-bold">
+      <Navbar
+        bg="dark"
+        variant="dark"
+        sticky="top"
+        className="shadow-sm px-2 px-sm-3"
+      >
+        <Container fluid className="d-flex flex-wrap align-items-center gap-2">
+          <Navbar.Brand href="#" className="fw-bold me-2 me-sm-3">
             CrossClues
           </Navbar.Brand>
-          <Navbar.Text className="me-auto text-light">
-            <span className="me-4">
+          <div className="game-navbar-info text-light flex-grow-1">
+            <span>
               <strong>Room:</strong>{" "}
-              <code className="bg-light text-dark px-2 py-1 rounded user-select-all">
-                {roomCode}
-              </code>
+              <code className="room-code">{roomCode}</code>
             </span>
-            <span className="me-4">
+            <span className="d-none d-sm-inline">
               <strong>Player:</strong> {decodeURIComponent(playerName)}
             </span>
             <span>
               <strong>Players:</strong> {players.join(", ")}
             </span>
-          </Navbar.Text>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={handleStartGame}
-            className="fw-bold me-2"
-          >
-            New Game
-          </Button>
-          <Button
-            variant="danger"
-            size="sm"
-            onClick={handleLeaveRoom}
-            className="fw-bold"
-          >
-            Leave Room
-          </Button>
+          </div>
+          <div className="game-navbar-buttons">
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={handleStartGame}
+              className="fw-bold"
+            >
+              New Game
+            </Button>
+            <Button
+              variant="danger"
+              size="sm"
+              onClick={handleLeaveRoom}
+              className="fw-bold"
+            >
+              Leave
+            </Button>
+          </div>
         </Container>
       </Navbar>
 
       <Container
         fluid
-        className="flex-grow-1 d-flex align-items-center justify-content-center py-5"
+        className="flex-grow-1 d-flex align-items-start justify-content-center py-2 py-sm-3 py-md-4"
       >
         <div className="d-flex flex-column align-items-center w-100">
           {/* Game Over Banner */}
           {gameOver && (
-            <Alert variant="success" className="mb-4 text-center">
-              <Alert.Heading>🎉 Game Over! 🎉</Alert.Heading>
+            <Alert variant="success" className="game-alert text-center">
+              <Alert.Heading className="fs-5 fs-sm-4">
+                🎉 Game Over! 🎉
+              </Alert.Heading>
               <p className="mb-0">
                 You guessed{" "}
                 <strong>
@@ -176,94 +184,74 @@ export const GameScreen: React.FC = () => {
 
           {/* Waiting for game to start */}
           {!gameStarted && !gameOver && (
-            <Alert variant="info" className="mb-4 text-center">
-              <Alert.Heading>Waiting for game to start</Alert.Heading>
+            <Alert variant="info" className="game-alert text-center">
+              <Alert.Heading className="fs-5 fs-sm-4">
+                Waiting for game to start
+              </Alert.Heading>
               <p>
                 {players.length} player(s) in room. Need at least 2 to start.
               </p>
               {players.length >= 2 && (
-                <Button variant="primary" onClick={handleStartGame}>
+                <Button variant="primary" size="sm" onClick={handleStartGame}>
                   Start Game
                 </Button>
               )}
             </Alert>
           )}
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: `1fr repeat(${gridSize}, 1fr)`,
-              gap: "0.5rem",
-              padding: "2rem",
-              backgroundColor: "white",
-              borderRadius: "0.5rem",
-              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            {/* Header corner cell */}
+          <div className="game-grid-container">
             <div
+              className="game-grid"
               style={{
-                aspectRatio: "1",
-                backgroundColor: "#e9ecef",
-                border: "1px solid #dee2e6",
+                gridTemplateColumns: `1fr repeat(${gridSize}, 1fr)`,
               }}
-            />
+            >
+              {/* Header corner cell */}
+              <div className="grid-cell header-cell" />
 
-            {/* Column headers */}
-            {columnWords.map((word, idx) => (
-              <div
-                key={`col-clue-${idx}`}
-                style={{
-                  aspectRatio: "1",
-                  backgroundColor: "#e9ecef",
-                  border: "1px solid #dee2e6",
-                }}
-              >
-                <ClueLabel label={word} clue={colLabels[idx] || ""} />
-              </div>
-            ))}
-
-            {/* Grid rows with row headers */}
-            {Array.from({ length: gridSize }).map((_, rowIdx) => (
-              <Fragment key={`row-${rowIdx}`}>
-                {/* Row header */}
-                <div
-                  style={{
-                    aspectRatio: "1",
-                    backgroundColor: "#e9ecef",
-                    border: "1px solid #dee2e6",
-                  }}
-                >
-                  <ClueLabel
-                    label={rowWords[rowIdx] || ""}
-                    clue={rowLabels[rowIdx] || ""}
-                  />
+              {/* Column headers */}
+              {columnWords.map((word, idx) => (
+                <div key={`col-clue-${idx}`} className="grid-cell header-cell">
+                  <ClueLabel label={word} clue={colLabels[idx] || ""} />
                 </div>
+              ))}
 
-                {/* Grid cells for this row */}
-                {Array.from({ length: gridSize }).map((_, colIdx) => {
-                  const cell = grid[rowIdx]?.[colIdx];
-                  const cellLabel = `${rowLabels[rowIdx]}${colLabels[colIdx]}`;
-                  return (
-                    <div
-                      key={`cell-${rowIdx}-${colIdx}`}
-                      style={{ aspectRatio: "1" }}
-                    >
-                      <GridButton
-                        label={cellLabel}
-                        guessed={cell?.guessedCorrectly}
-                        discarded={cell?.discardedByMe}
-                      />
-                    </div>
-                  );
-                })}
-              </Fragment>
-            ))}
+              {/* Grid rows with row headers */}
+              {Array.from({ length: gridSize }).map((_, rowIdx) => (
+                <Fragment key={`row-${rowIdx}`}>
+                  {/* Row header */}
+                  <div className="grid-cell header-cell">
+                    <ClueLabel
+                      label={rowWords[rowIdx] || ""}
+                      clue={rowLabels[rowIdx] || ""}
+                    />
+                  </div>
+
+                  {/* Grid cells for this row */}
+                  {Array.from({ length: gridSize }).map((_, colIdx) => {
+                    const cell = grid[rowIdx]?.[colIdx];
+                    const cellLabel = `${rowLabels[rowIdx]}${colLabels[colIdx]}`;
+                    return (
+                      <div
+                        key={`cell-${rowIdx}-${colIdx}`}
+                        className="grid-cell"
+                      >
+                        <GridButton
+                          label={cellLabel}
+                          guessed={cell?.guessedCorrectly}
+                          discarded={cell?.discardedByMe}
+                        />
+                      </div>
+                    );
+                  })}
+                </Fragment>
+              ))}
+            </div>
           </div>
 
           {/* Player's cards - only show when game is started and not over */}
           {gameStarted && !gameOver && playerCards.length > 0 && (
-            <div className="d-flex gap-3 mt-4">
+            <div className="player-cards-container">
               {playerCards.map((card, idx) => (
                 <ActionButton
                   key={`card-${idx}`}
