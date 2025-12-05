@@ -1,0 +1,36 @@
+/* GameScreen grid styling */
+.game-grid-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: 1fr repeat(5, 1fr);
+  gap: 8px;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.grid-cell {
+  aspect-ratio: 1;
+}
+
+.header-corner {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.header-cell {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+
+.grid-row {
+  display: contents;
+}
+
+

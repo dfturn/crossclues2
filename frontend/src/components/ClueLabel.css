@@ -1,0 +1,24 @@
+.clue-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.clue-label-text {
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 0.25rem;
+}
+
+.clue-label-clue {
+  font-weight: 400;
+  color: #6c757d;
+  font-size: 0.8rem;
+}
