@@ -2,7 +2,10 @@
 FROM node:20-alpine AS frontend-builder
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm install
+# Use npm ci for reproducible installs from package-lock.json which
+# avoids many installation conflicts inside CI/build environments.
+# Add no-audit/no-fund to keep output quieter in CI.
+RUN npm ci --prefer-offline --no-audit --no-fund
 COPY frontend/ ./
 RUN npm run build
 

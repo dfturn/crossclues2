@@ -1,0 +1,14 @@
+/node_modules
+/frontend/node_modules
+/frontend/dist
+/dist
+/.git
+/.github
+.env
+*.log
+*.tmp
+crossclues2
+**/.DS_Store
+**/.venv
+Dockerfile
+README.md
