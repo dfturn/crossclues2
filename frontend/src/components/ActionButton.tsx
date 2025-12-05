@@ -38,10 +38,11 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
             width: "clamp(32px, 8vw, 40px)",
             height: "clamp(32px, 8vw, 40px)",
             borderRadius: "50%",
-            top: "-12px",
-            right: "-12px",
+            top: "-8px",
+            right: "-8px",
             fontSize: "clamp(20px, 5vw, 28px)",
             fontWeight: "bold",
+            zIndex: 20,
           }}
         >
           ×
