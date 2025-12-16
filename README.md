@@ -80,6 +80,18 @@ npm run build
 
 ### Running Both
 
+#### Quick start (recommended)
+
+From the repo root:
+
+```bash
+./start-dev.sh
+```
+
+The script installs missing frontend dependencies, runs `go run .` for the backend on port 8080, and launches `npm run dev` on port 5173. Press <kbd>Ctrl</kbd>+<kbd>C</kbd> to stop both.
+
+#### Manual steps
+
 1. Start the backend server:
 
    ```bash
